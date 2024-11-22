@@ -14,9 +14,6 @@ export class MeteoAPI {
   }
 
   static async getCityFromCoords(coords) {
-    console.log(
-      `https://nominatim.openstreetmap.org/reverse?lat=${coords.lat}&lon=${coords.lng}`
-    );
     const {
       address: { city, village, town },
     } = (
@@ -25,5 +22,18 @@ export class MeteoAPI {
       )
     ).data;
     return city || village || town;
+  }
+
+  static async getCityFromName(name) {
+    try {
+      const { latitude: lat, longitude: lng } = (
+        await axios.get(
+          `https://geocoding-api.open-meteo.com/v1/search?name=${name}&language=fr&count=1`
+        )
+      ).data.results[0];
+      return { lat, lng };
+    } catch (error) {
+      throw "Pas de coodonnées trouvées pour la recherche : " + name;
+    }
   }
 }

@@ -4,6 +4,7 @@ export const s = StyleSheet.create({
   clock: {
     alignItems: "flex-end",
   },
+
   weatherLabel: {
     alignSelf: "flex-end",
     transform: [
